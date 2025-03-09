@@ -5,7 +5,7 @@ import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons'
 import { router } from 'expo-router'
 
 
-const login = () => {
+const register = () => {
   return (
     <LinearGradient colors={['#591e03', '#d70b26', '#a83204']}
       style={{
@@ -20,9 +20,11 @@ const login = () => {
             <MaterialCommunityIcons name="account-circle" size={100} color="#f7f7f7" />
         </View>
 
+        <TextInput style={[styles.registerButton, {marginTop: 8}]} placeholder='Full Name'/>
         <TextInput style={[styles.registerButton, {marginTop: 8}]} placeholder='E-mail'/>
         <TextInput style={[styles.registerButton, {marginTop: 8}]}placeholder='Password' secureTextEntry/>
-        <TouchableOpacity style={[styles.registerButton, {marginTop: 32}]} onPress={() => {router.replace('/welcome')}}><Text>Login</Text>
+        <TextInput style={[styles.registerButton, {marginTop: 8}]}placeholder='Confirm Password' secureTextEntry/>
+        <TouchableOpacity style={[styles.registerButton, {marginTop: 32}]} onPress={() => {router.replace('/welcome')}}><Text>Sign in</Text>
         </TouchableOpacity>
 
       </View>
@@ -42,4 +44,4 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     width: 175,},
 })
-export default login
+export default register
