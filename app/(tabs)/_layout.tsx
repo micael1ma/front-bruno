@@ -12,32 +12,45 @@ export default function TabLayout() {
   const colorScheme = useColorScheme();
 
   return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
-        tabBarButton: HapticTab,
-        tabBarBackground: TabBarBackground,
-        tabBarStyle: Platform.select({
-          ios: {
-            // Use a transparent background on iOS to show the blur effect
-            position: 'absolute',
-          },
-          default: {},
-        }),
-      }}>
+    <Tabs>
       <Tabs.Screen
-        name="index"
+        name="home"
         options={{
+          headerStyle: {
+            backgroundColor: '#d70b26',
+          },
+          headerTitleStyle: {
+            fontSize: 24,
+            fontWeight: 'bold',
+            color: '#f7f7f7'
+          },	
           title: 'Home',
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          tabBarStyle: {
+            backgroundColor: '#d70b26',
+          },
+          tabBarActiveTintColor:'#f7f7f7',
+          tabBarInactiveTintColor:'#591e03'
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="cart"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          headerStyle: {
+            backgroundColor: '#d70b26',
+          },
+          headerTitleStyle: {
+            fontSize: 24,
+            fontWeight: 'bold',
+            color: '#f7f7f7'
+          },	
+          title: 'Cart',
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="cart.fill" color={color} />,
+          tabBarStyle: {
+            backgroundColor: '#d70b26',
+          },
+          tabBarActiveTintColor:'#f7f7f7',
+          tabBarInactiveTintColor:'#591e03'
         }}
       />
     </Tabs>

@@ -25,7 +25,7 @@ const register = () => {
         <TextInput style={[styles.registerButton, {marginTop: 8}]}placeholder='Password' secureTextEntry/>
         <TextInput style={[styles.registerButton, {marginTop: 8}]}placeholder='Confirm Password' secureTextEntry/>
 
-        <TouchableOpacity style={[styles.registerButton, {marginTop: 24}]} onPress={() => {router.replace('/welcome')}}>
+        <TouchableOpacity style={[styles.registerButton, {marginTop: 24}]} onPress={() => {router.replace('/login')}}>
         <Text style={styles.buttonText}>Sign in</Text>
         </TouchableOpacity>
 

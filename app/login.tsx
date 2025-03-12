@@ -23,7 +23,7 @@ const login = () => {
         <TextInput style={[styles.registerButton, {marginTop: 24}]} placeholder='E-mail'/>
         <TextInput style={[styles.registerButton, {marginTop: 8}]}placeholder='Password' secureTextEntry/>
 
-        <TouchableOpacity style={[styles.registerButton, {marginTop: 24}]} onPress={() => {router.replace('/welcome')}}>
+        <TouchableOpacity style={[styles.registerButton, {marginTop: 24}]} onPress={() => {router.replace('/(tabs)/home')}}>
             <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
 
