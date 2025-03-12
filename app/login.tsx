@@ -20,9 +20,11 @@ const login = () => {
             <MaterialCommunityIcons name="account-circle" size={100} color="#f7f7f7" />
         </View>
 
-        <TextInput style={[styles.registerButton, {marginTop: 8}]} placeholder='E-mail'/>
+        <TextInput style={[styles.registerButton, {marginTop: 24}]} placeholder='E-mail'/>
         <TextInput style={[styles.registerButton, {marginTop: 8}]}placeholder='Password' secureTextEntry/>
-        <TouchableOpacity style={[styles.registerButton, {marginTop: 32}]} onPress={() => {router.replace('/welcome')}}><Text>Login</Text>
+
+        <TouchableOpacity style={[styles.registerButton, {marginTop: 24}]} onPress={() => {router.replace('/welcome')}}>
+            <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
 
       </View>
@@ -36,10 +38,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+
   registerButton: {
     backgroundColor: '#f7f7f7',
     padding: 10,
-    borderRadius: 15,
-    width: 175,},
+    borderRadius: 10,
+    width: 175,
+    },
+
+  buttonText: {
+    textAlign: 'center',
+    color: '#000000',
+    fontSize: 16,
+  },
 })
 export default login
