@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import { AntDesign } from '@expo/vector-icons'
 import { useRouter } from 'expo-router'
@@ -16,9 +16,13 @@ const welcome = () => {
       }}>
       
       <View style={styles.formContainer}>
+      
 
         <View style={{alignItems: 'center'}}>
-          <AntDesign name="yuque" size={100} color="#f7f7f7" />
+          <Image 
+              source={require('../assets/images/pizza.png')} // Substitua pelo caminho da sua imagem
+              style={styles.image}
+            />
           <Text style={{fontSize: 32, color:"#f7f7f7"}}>IA Sabores</Text>
         </View>
         
@@ -53,6 +57,10 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#000000',
     fontSize: 16,
+  },
+  image: {
+    width: 150, 
+    height: 150, 
   },
 })
 export default welcome

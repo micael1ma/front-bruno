@@ -2,10 +2,112 @@ import React from 'react'
 import { Button, StyleSheet, Text, TextInput, Touchable, TouchableOpacity, View } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons'
-import { router } from 'expo-router'
+import { router, useRouter } from 'expo-router'
 
 
 const register = () => {
+
+
+  const router = useRouter()
+  const [fullName, setFullName] = React.useState({value: '', dirty: false})
+  const fullNameRegex = /^[A-Za-zÀ-ÖØ-öø-ÿ]{2,}(?:\s[A-Za-zÀ-ÖØ-öø-ÿ]{2,})+$/;
+  const handleErrorFullName = () => {
+    if(!fullName.value && fullName.dirty){
+      return (<Text style={styles.error}>Required field</Text>)
+  }else if(!fullNameRegex.test(fullName.value) && fullName.dirty){
+      return (<Text style={styles.error}>Invalid Name</Text>)
+  }
+  else{ return (<Text></Text>)}
+  }
+
+
+  const [email, setEmail] = React.useState({value: '', dirty: false})
+    const emailRegex = /^[^\s@]+@+[^\s@]+\.[^\s@]+$/;
+    const handleErrorEmail = () => {
+      if(!email.value && email.dirty){
+        return (<Text style={styles.error}>Required field</Text>)
+      }else if(!emailRegex.test(email.value) && email.dirty){
+        return (<Text style={styles.error}>Invalid E-mail</Text>)
+      }else{
+        return (<Text></Text>)
+      }
+    }
+
+
+    const [cpf, setCPF] = React.useState({value: '', dirty: false})
+    const cpfRegex = /^\d{3}\.\d{3}\.\d{3}\-\d{2}$/;
+    const handleErrorCPF = () => {
+      if(!cpf.value && cpf.dirty){
+        return (<Text style={styles.error}>Required field</Text>)
+      }else if(!cpfRegex.test(cpf.value) && cpf.dirty){
+        return (<Text style={styles.error}>Invalid CPF</Text>)
+      }else{
+        return (<Text></Text>)
+      }
+    }
+
+
+   const [password, setPassword] = React.useState({value: '', dirty: false})
+     const handleErrorPassword = () => {
+      if(password.value !== passwordConfirm.value && passwordConfirm.dirty){
+        return (<Text style={styles.error}>Passwords do not match</Text>)
+      }
+       if(!password.value && password.dirty){
+         return (<Text style={styles.error}>Required field</Text>)
+       }else{
+         return (<Text></Text>)
+       }
+     }
+
+     const [passwordConfirm, setPasswordConfirm] = React.useState({value: '', dirty: false})
+     const handleErrorPasswordConfirm = () => {
+      if(password.value !== passwordConfirm.value && passwordConfirm.dirty){
+        return (<Text style={styles.error}>Passwords do not match</Text>)
+      }
+       if(!passwordConfirm.value && passwordConfirm.dirty){
+         return (<Text style={styles.error}>Required field</Text>)
+       }else{
+         return (<Text></Text>)
+       }
+     }
+
+     const handleErrorForm = () => {
+      let hasError = false
+      if(!fullNameRegex.test(fullName.value)){
+        setFullName({value: fullName.value, dirty: true})
+        hasError = true
+      }
+      if(!fullName.value){
+        setFullName({value: fullName.value, dirty: true})
+        hasError = true
+      }
+      if(!cpfRegex.test(cpf.value)){
+        setCPF({value: cpf.value, dirty: true})
+        hasError = true
+      }
+      if(!cpf.value){
+        setCPF({value: cpf.value, dirty: true})
+        hasError = true
+      }
+
+      if(!emailRegex.test(email.value)){
+        setEmail({value: email.value, dirty: true})
+        hasError = true
+      }
+      if(!email.value){
+        setEmail({value: email.value, dirty: true})
+        hasError = true
+      }
+      if(!password.value){
+        setPassword({value: password.value, dirty: true})
+        hasError = true
+      }
+      if(!hasError){
+        router.replace('/(tabs)/home')
+      }
+    }
+
+
   return (
     <LinearGradient colors={['#591e03', '#d70b26', '#a83204']}
       style={{
@@ -14,19 +116,29 @@ const register = () => {
         alignItems: 'center',
       }}>
       
-      <View style={styles.formContainer}>
+      <View>
 
         <View style={{alignItems: 'center'}}>
-            <MaterialCommunityIcons name="account-circle" size={100} color="#f7f7f7" />
+          <MaterialCommunityIcons name="account-circle" size={100} color="#f7f7f7" />
         </View>
 
-        <TextInput style={[styles.registerButton, {marginTop: 24}]} placeholder='Full Name'/>
-        <TextInput style={[styles.registerButton, {marginTop: 8}]} placeholder='E-mail'/>
-        <TextInput style={[styles.registerButton, {marginTop: 8}]}placeholder='Password' secureTextEntry/>
-        <TextInput style={[styles.registerButton, {marginTop: 8}]}placeholder='Confirm Password' secureTextEntry/>
+        <TextInput onChangeText={(text) => setFullName({value: text, dirty: true})} style={[styles.registerButton, {marginTop: 24}]} placeholder='Full Name'/>
+        {handleErrorFullName()}
+        <TextInput onChangeText={(text) => setEmail({value: text, dirty: true})} style={[styles.registerButton, {marginTop: 8}]} placeholder='E-mail'/>
+        {handleErrorEmail()}
+        <TextInput onChangeText={(text) => setCPF({value: text, dirty: true})} style={[styles.registerButton, {marginTop: 8}]} placeholder='CPF'/>
+        {handleErrorCPF()}
+        <TextInput onChangeText={(text) => setPassword({value: text, dirty: true})} style={[styles.registerButton, {marginTop: 8}]}placeholder='Password' secureTextEntry/>
+        {handleErrorPassword()}
+        <TextInput onChangeText={(text) => setPasswordConfirm({value: text, dirty: true})} style={[styles.registerButton, {marginTop: 8}]}placeholder='Confirm Password' secureTextEntry/>
+        {handleErrorPasswordConfirm()}
 
-        <TouchableOpacity style={[styles.registerButton, {marginTop: 24}]} onPress={() => {router.replace('/login')}}>
-        <Text style={styles.buttonText}>Sign in</Text>
+        <TouchableOpacity style={[styles.registerButton, {marginTop: 16}]} onPress={() => {handleErrorForm()}}>
+        <Text style={styles.buttonText}>Sing in</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={[styles.registerButton, {marginTop: 8}]} onPress={() => {router.replace('/welcome')}}>
+        <Text style={styles.buttonText}>Back</Text>
         </TouchableOpacity>
 
       </View>
@@ -35,12 +147,6 @@ const register = () => {
 }
 
 const styles = StyleSheet.create({
-  formContainer: {
-    flex:1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
   registerButton: {
     backgroundColor: '#f7f7f7',
     padding: 10,
@@ -53,5 +159,10 @@ const styles = StyleSheet.create({
     color: '#000000',
     fontSize: 16,
   },
+  error:{
+    color: '#f7f7f7',
+    padding: 5,
+},
+
 })
 export default register
