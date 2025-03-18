@@ -5,45 +5,45 @@ import { useCart } from '../context/CartContext';
 const products = [
   {
     id: 1,
-    name: 'Produto 1',
-    price: 'R$ 100,00',
-    description: 'Descrição breve do Produto 1',
+    name: 'Pepperoni Pizza',
+    price: '$ 20,00',
+    description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
     imageUrl: 'https://example.com/product2.jpg',
   },
   {
     id: 2,
-    name: 'Produto 2',
-    price: 'R$ 150,00',
-    description: 'Descrição breve do Produto 2',
-    imageUrl: 'https://example.com/product2.jpg',
+    name: 'Margarita Pizza',
+    price: '$ 15,00',
+    description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+    imageUrl: 'https://example.com/product1.jpg',
   },
   {
     id: 3,
-    name: 'Produto 3',
-    price: 'R$ 200,00',
-    description: 'Descrição breve do Produto 3',
+    name: 'Vegetarian Pizza',
+    price: '$ 18,00',
+    description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
     imageUrl: 'https://example.com/product3.jpg',
   },
   {
     id: 4,
-    name: 'Produto 4',
-    price: 'R$ 200,00',
-    description: 'Descrição breve do Produto 4',
-    imageUrl: 'https://example.com/product3.jpg',
+    name: 'Vegan Pizza',
+    price: '$ 22,00',
+    description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+    imageUrl: 'https://example.com/product4.jpg',
   },
   {
     id: 5,
-    name: 'Produto 5',
-    price: 'R$ 200,00',
-    description: 'Descrição breve do Produto 5',
-    imageUrl: 'https://example.com/product3.jpg',
+    name: 'Cheese Pizza',
+    price: '$ 12,00',
+    description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+    imageUrl: 'https://example.com/product5.jpg',
   },
   {
     id: 6,
-    name: 'Produto 6',
-    price: 'R$ 200,00',
-    description: 'Descrição breve do Produto 6',
-    imageUrl: 'https://example.com/product3.jpg',
+    name: 'Hawaiian Pizza',
+    price: '$ 25,00',
+    description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+    imageUrl: 'https://example.com/product6.jpg',
   },
 ];
 
@@ -57,9 +57,13 @@ const Home = () => {
           <Image source={{ uri: product.imageUrl }} style={styles.image} />
           <View style={styles.infoContainer}>
             <Text style={styles.name}>{product.name}</Text>
-            <Text style={styles.price}>{product.price}</Text>
             <Text style={styles.description}>{product.description}</Text>
-            <Button title="Comprar" onPress={() => addToCart(product)} />
+            
+            <View style={styles.priceContainer}>
+              <Text style={styles.price}>{product.price}</Text>
+              <Button title="Add to Cart" onPress={() => addToCart(product)} />
+            </View>
+
           </View>
         </View>
       ))}
@@ -93,15 +97,21 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
   },
-  price: {
-    fontSize: 16,
-    color: 'green',
-    marginVertical: 5,
-  },
   description: {
     fontSize: 14,
     color: '#555',
-    marginBottom: 10,
+    marginTop: 5,
+  },
+  priceContainer: {
+    flexDirection: 'row', // Align price and button in the same line
+    alignItems: 'center', // Align items vertically
+    justifyContent: 'space-between', // Space them out properly
+    marginTop: 5,
+  },
+  price: {
+    fontSize: 16,
+    color: 'green',
+    marginRight: 10, // Add some spacing between price and button
   },
 });
 
