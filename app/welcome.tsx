@@ -26,6 +26,10 @@ const welcome = () => {
           <Text style={{fontSize: 32, color:"#f7f7f7"}}>IA Sabores</Text>
         </View>
         
+        <TouchableOpacity style={[styles.registerButton, {marginTop: 32}]} onPress={() => {router.replace('/(tabs)/home')}}>
+          <Text style={styles.buttonText}>Fast Login</Text>
+        </TouchableOpacity>
+
         <TouchableOpacity style={[styles.registerButton, {marginTop: 32}]} onPress={() => {router.replace('/login')}}>
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>

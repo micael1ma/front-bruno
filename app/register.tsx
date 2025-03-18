@@ -72,7 +72,7 @@ const Register = () => {
   const handleErrorForm = () => {
     let hasError = false;
 
-    if (!fullNameRegex.test(fullName.value) {
+    if (!fullNameRegex.test(fullName.value)) {
       setFullName({ value: fullName.value, dirty: true });
       hasError = true;
     }

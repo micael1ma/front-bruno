@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text, View, Button, Image, StyleSheet, ScrollView } from 'react-native';
+import { useCart } from '../context/CartContext';
 
 const products = [
   {
@@ -44,23 +45,21 @@ const products = [
     description: 'Descrição breve do Produto 6',
     imageUrl: 'https://example.com/product3.jpg',
   },
-  
-
-
 ];
 
 const Home = () => {
+  const { addToCart } = useCart();
+
   return (
     <ScrollView style={styles.container}>
       {products.map((product) => (
         <View key={product.id} style={styles.productContainer}>
           <Image source={{ uri: product.imageUrl }} style={styles.image} />
-          
           <View style={styles.infoContainer}>
             <Text style={styles.name}>{product.name}</Text>
             <Text style={styles.price}>{product.price}</Text>
             <Text style={styles.description}>{product.description}</Text>
-            <Button title="Comprar" onPress={() => alert('Compra realizada!')} />
+            <Button title="Comprar" onPress={() => addToCart(product)} />
           </View>
         </View>
       ))}
