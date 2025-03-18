@@ -1,7 +1,7 @@
 import React from 'react'
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
-import { AntDesign } from '@expo/vector-icons'
+
 import { useRouter } from 'expo-router'
 
 const welcome = () => {
@@ -20,22 +20,22 @@ const welcome = () => {
 
         <View style={{alignItems: 'center'}}>
           <Image 
-              source={require('../assets/images/pizza.png')} // Substitua pelo caminho da sua imagem
+              source={require('../assets/images/pizza.png')}
               style={styles.image}
             />
           <Text style={{fontSize: 32, color:"#f7f7f7"}}>IA Sabores</Text>
         </View>
         
-        <TouchableOpacity style={[styles.registerButton, {marginTop: 32}]} onPress={() => {router.replace('/(tabs)/home')}}>
-          <Text style={styles.buttonText}>Fast Login</Text>
-        </TouchableOpacity>
-
         <TouchableOpacity style={[styles.registerButton, {marginTop: 32}]} onPress={() => {router.replace('/login')}}>
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={[styles.registerButton, {marginTop: 8}]} onPress={() => {router.replace('/register')}}>
           <Text style={styles.buttonText}>Sign in</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={{marginTop: 10}} onPress={() => {router.replace('/(tabs)/home')}}>
+          <Text style={{color:"#f7f7f7"}}>Fast Login</Text>
         </TouchableOpacity>
 
       </View>

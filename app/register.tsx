@@ -53,7 +53,7 @@ const Register = () => {
     if (!password.value && password.dirty) {
       return <Text style={styles.error}>Required field</Text>;
     } else if (password.value.length < 6 && password.dirty) {
-      return <Text style={styles.error}>Password must be at least 6 characters</Text>;
+      return <Text style={styles.error}>Password too short</Text>;
     } else {
       return <Text></Text>;
     }

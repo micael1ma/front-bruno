@@ -18,9 +18,10 @@ const Cart = () => {
 
           return (
             <View key={item.id} style={styles.productContainer}>
-              <Image source={{ uri: item.imageUrl }} style={styles.image} />
+              <Image source={item.imageUrl} style={styles.image} />
               <View style={styles.infoContainer}>
                 <Text style={styles.name}>{item.name}</Text>
+                <Text style={[styles.price, { color: "gray", marginTop: 8 }]}>Item price: {item.price}</Text>
                 <View style={styles.bottomContainer}>
                   <Text style={styles.price}>Total: $ {totalPrice.toFixed(2)}</Text>
                   <View style={styles.quantityContainer}>
