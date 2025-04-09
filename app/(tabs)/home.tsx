@@ -1,65 +1,36 @@
 import React from 'react';
 import { Text, View, Button, Image, StyleSheet, ScrollView } from 'react-native';
 import { useCart } from '../context/CartContext';
-
-const products = [
-  {
-    id: 1,
-    name: 'Pepperoni Pizza',
-    price: '$ 20,00',
-    description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-    imageUrl: require('../../assets/images/pizza-home.png'),
-  },
-  {
-    id: 2,
-    name: 'Margarita Pizza',
-    price: '$ 15,00',
-    description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-    imageUrl: require('../../assets/images/pizza-home.png'),
-  },
-  {
-    id: 3,
-    name: 'Vegetarian Pizza',
-    price: '$ 18,00',
-    description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-    imageUrl: require('../../assets/images/pizza-home.png'),
-  },
-  {
-    id: 4,
-    name: 'Vegan Pizza',
-    price: '$ 22,00',
-    description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-    imageUrl: require('../../assets/images/pizza-home.png'),
-  },
-  {
-    id: 5,
-    name: 'Cheese Pizza',
-    price: '$ 12,00',
-    description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-    imageUrl: require('../../assets/images/pizza-home.png'),
-  },
-  {
-    id: 6,
-    name: 'Hawaiian Pizza',
-    price: '$ 25,00',
-    description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-    imageUrl: require('../../assets/images/pizza-home.png'),
-  },
-];
+import { useEffect, useState } from 'react';
+import api from "../../services/api"
 
 const Home = () => {
   const { addToCart } = useCart();
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await api.get('/api/pizza');
+        setProducts(response.data);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
 
   return (
     <ScrollView style={styles.container}>
       {products.map((product) => (
-        <View key={product.id} style={styles.productContainer}>
-          <Image source={product.imageUrl} style={styles.image} />
+        <View key={product._id} style={styles.productContainer}>
+          <Image source={require('../../assets/images/pizza-home.png')} style={styles.image} />
           <View style={styles.infoContainer}>
             <Text style={styles.name}>{product.name}</Text>
             <Text style={styles.description}>{product.description}</Text>
             <View style={styles.priceContainer}>
-              <Text style={styles.price}>{product.price}</Text>
+              <Text style={styles.price}>$: {product.price}</Text>
               <Button title="Add to Cart" onPress={() => addToCart(product)} />
             </View>
           </View>
