@@ -1,4 +1,5 @@
 import React from 'react';
+import api from "../services/api"
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -11,6 +12,26 @@ const Login = () => {
   const [password, setPassword] = React.useState({ value: '', dirty: false });
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  const handleLogin = async () => {
+    const credentials = {
+      email: email.value,
+      password: password.value
+    };
+  
+    try {
+      const response = await api.post('/api/login', credentials);
+      alert(response.data);
+      router.replace('/(tabs)/home');
+      
+     
+    } catch (error) {
+      alert('Email ou senha incorretos.');
+    }
+  };
+  
+  
+  
 
   const handleErrorEmail = () => {
     if (!email.value && email.dirty) {
@@ -68,7 +89,7 @@ const Login = () => {
         />
         {handleErrorPassword()}
 
-        <TouchableOpacity style={styles.button} onPress={handleErrorForm}>
+        <TouchableOpacity style={styles.button} onPress={handleLogin}>
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
 
