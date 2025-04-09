@@ -3,9 +3,12 @@ import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-nativ
 import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
+import api from '@/services/api';
 
 const Register = () => {
   const router = useRouter();
+
+
 
   const [fullName, setFullName] = React.useState({ value: '', dirty: false });
   const fullNameRegex = /^[A-Za-zÀ-ÖØ-öø-ÿ]{2,}(?:\s[A-Za-zÀ-ÖØ-öø-ÿ]{2,})+$/;
@@ -18,6 +21,22 @@ const Register = () => {
 
   const [password, setPassword] = React.useState({ value: '', dirty: false });
   const [passwordConfirm, setPasswordConfirm] = React.useState({ value: '', dirty: false });
+
+  const handleRegister= async () => {
+    const credentials = {
+      name: fullName.value,
+      email: email.value,
+      cpf: cpf.value,
+      password: password.value
+    };
+
+    try {
+      const response = await api.post('/api/register', credentials);
+      router.replace('/login');
+    } catch (error) {
+      alert('Erro ao fazer cadastro.');
+    }
+  };
 
   const handleErrorFullName = () => {
     if (!fullName.value && fullName.dirty) {
@@ -106,7 +125,7 @@ const Register = () => {
     }
 
     if (!hasError) {
-      router.replace('/(tabs)/home');
+      handleRegister()
     }
   };
 
@@ -154,7 +173,7 @@ const Register = () => {
         />
         {handleErrorPasswordConfirm()}
 
-        <TouchableOpacity style={[styles.button, { marginTop: 16 }]} onPress={handleErrorForm}>
+        <TouchableOpacity style={[styles.button, { marginTop: 16 }]} onPress={() => { handleErrorForm()}}>
           <Text style={styles.buttonText}>Sign in</Text>
         </TouchableOpacity>
 

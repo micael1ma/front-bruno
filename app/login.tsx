@@ -18,13 +18,10 @@ const Login = () => {
       email: email.value,
       password: password.value
     };
-  
+
     try {
       const response = await api.post('/api/login', credentials);
-      alert(response.data);
       router.replace('/(tabs)/home');
-      
-     
     } catch (error) {
       alert('Email ou senha incorretos.');
     }
@@ -63,7 +60,7 @@ const Login = () => {
     }
 
     if (!hasError) {
-      router.replace('/(tabs)/home');
+      handleLogin()
     }
   };
 
@@ -89,7 +86,7 @@ const Login = () => {
         />
         {handleErrorPassword()}
 
-        <TouchableOpacity style={styles.button} onPress={handleLogin}>
+        <TouchableOpacity style={styles.button} onPress={handleErrorForm}>
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
 
