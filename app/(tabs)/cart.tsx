@@ -11,21 +11,19 @@ const Cart = () => {
       {cart.length === 0 ? (
         <Text style={styles.emptyCartText}>Carrinho vazio</Text>
       ) : (
-        cart.map((item) => {
-          // Convertendo preço de string para número
-          const unitPrice = parseFloat(item.price.replace('$ ', '').replace(',', '.')); 
-          const totalPrice = unitPrice * item.quantity; // Calculando preço total
+        cart.map((item) => { 
+          const totalPrice = item.price * item.quantity; // Calculando preço total
 
           return (
-            <View key={item.id} style={styles.productContainer}>
-              <Image source={item.imageUrl} style={styles.image} />
+            <View key={item._id} style={styles.productContainer}>
+              <Image source={require('../../assets/images/pizza-home.png')} style={styles.image} />
               <View style={styles.infoContainer}>
                 <Text style={styles.name}>{item.name}</Text>
                 <Text style={[styles.price, { color: "gray", marginTop: 8 }]}>Item price: {item.price}</Text>
                 <View style={styles.bottomContainer}>
                   <Text style={styles.price}>Total: $ {totalPrice.toFixed(2)}</Text>
                   <View style={styles.quantityContainer}>
-                    <Pressable onPress={() => removeFromCart(item.id)} style={styles.iconButton}>
+                    <Pressable onPress={() => removeFromCart(item._id)} style={styles.iconButton}>
                       <AntDesign name="minus" size={18} color="black" />
                     </Pressable>
                     <Text style={styles.quantity}>{item.quantity}</Text>

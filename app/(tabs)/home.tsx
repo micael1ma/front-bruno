@@ -6,7 +6,15 @@ import api from "../../services/api"
 
 const Home = () => {
   const { addToCart } = useCart();
-  const [products, setProducts] = useState([]);
+  
+  interface Product {
+    _id: string;
+    name: string;
+    description: string;
+    price: number;
+  }
+
+  const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
     const fetchProducts = async () => {
