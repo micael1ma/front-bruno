@@ -4,6 +4,7 @@ import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-nativ
 import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = () => {
   const router = useRouter();
@@ -22,14 +23,13 @@ const Login = () => {
     try {
       const response = await api.post('/api/login', credentials);
       router.replace('/(tabs)/home');
+      console.log("User:", response.data.user.name)
+       await AsyncStorage.setItem('USER_NAME', response.data.user.name)
     } catch (error) {
       alert('Email ou senha incorretos.');
     }
   };
   
-  
-  
-
   const handleErrorEmail = () => {
     if (!email.value && email.dirty) {
       return <Text style={styles.error}>Required field</Text>;

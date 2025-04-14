@@ -19,7 +19,7 @@ const Cart = () => {
               <Image source={require('../../assets/images/pizza-home.png')} style={styles.image} />
               <View style={styles.infoContainer}>
                 <Text style={styles.name}>{item.name}</Text>
-                <Text style={[styles.price, { color: "gray", marginTop: 8 }]}>Item price: {item.price}</Text>
+                <Text style={[styles.price, { color: "gray", marginTop: 8 }]}>Unit price: ${item.price}</Text>
                 <View style={styles.bottomContainer}>
                   <Text style={styles.price}>Total: $ {totalPrice.toFixed(2)}</Text>
                   <View style={styles.quantityContainer}>
