@@ -4,7 +4,6 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native'
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 
-
 class Message{
   text: string;
   sentBy: string;
@@ -13,7 +12,6 @@ class Message{
     this.sentBy = sentBy
   }
 }
-
 
 const styles = StyleSheet.create({
   bubbleWrapper:{
@@ -101,7 +99,9 @@ const styles = StyleSheet.create({
 
 })
 
-export const chat = () => {
+const ws = new WebSocket('ws://192.168.0.103:3000');
+
+const chat = () => {
   const [userLogged, setUserLogged] = useState('');
   const [message, setMessage] = useState('')
   const [chat, setChat] = useState<{messages: Message[]}>({messages:[]})
@@ -123,10 +123,32 @@ export const chat = () => {
     loadUser();
   }, []);
 
-  const sendMessage = () =>{
-    setMessage('')
-    setChat({messages: [...chat.messages, {text:message, sentBy: userLogged}]})
-  }
+  useEffect(() => {
+    ws.onopen = () => {
+      console.log('cliente conectado');
+    };
+
+    ws.onmessage = ({data}) => {
+      try{
+        chat.messages.push(JSON.parse(data))
+        setChat({messages: chat.messages})
+        setMessage('');
+      }catch(error){
+        console.log(error)
+    }
+    };
+
+  }, []);
+ 
+  const sendMessage = () => {
+    
+    const jsonString : string = JSON.stringify({ text: message, sentBy: userLogged });
+    ws.send(jsonString);
+    console.log(jsonString);
+ 
+  };
+
+
   return (
     <Fragment>
       <FlatList 
