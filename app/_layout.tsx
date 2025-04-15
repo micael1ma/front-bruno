@@ -1,6 +1,6 @@
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
+import { router, Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
@@ -8,6 +8,8 @@ import { CartProvider } from './context/CartContext';
 import 'react-native-reanimated';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
+import { TouchableOpacity } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
 // Evita que a tela de splash feche antes do carregamento dos assets
 SplashScreen.preventAutoHideAsync();
@@ -39,8 +41,15 @@ export default function RootLayout() {
           name="chat" 
           options={{ 
             title: 'Artificial Intelligence Chat',
-            headerTitleAlign: 'center'}} 
-            />
+            headerTitleAlign: 'center' ,
+            headerLeft: () =>{
+              return <TouchableOpacity 
+                onPress={() => router.replace('/(tabs)/home')}>
+                <Ionicons name='arrow-back' size={24}/>
+              </TouchableOpacity>
+            }
+          }}
+          />
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         </Stack>
         <StatusBar style="auto" />

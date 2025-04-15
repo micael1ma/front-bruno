@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import React, { Fragment, useEffect, useState } from 'react'
-import { FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native'
+import React, { Fragment, useEffect, useRef, useState } from 'react'
+import { FlatList, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native'
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 class Message{
@@ -82,6 +82,7 @@ const styles = StyleSheet.create({
     borderTopColor: Colors.light,
     alignItems: 'center',
     flexDirection: 'row',
+    marginTop:20,
   },
   messageTextInput:{
     flex: 1,
@@ -100,8 +101,8 @@ const styles = StyleSheet.create({
 })
 
 const ws = new WebSocket('ws://192.168.0.103:3000');
-
 const chat = () => {
+  const scrollRef = useRef<FlatList>(null)
   const [userLogged, setUserLogged] = useState('');
   const [message, setMessage] = useState('')
   const [chat, setChat] = useState<{messages: Message[]}>({messages:[]})
@@ -127,31 +128,23 @@ const chat = () => {
     ws.onopen = () => {
       console.log('cliente conectado');
     };
-
-    ws.onmessage = ({data}) => {
-      try{
+    ws.onmessage = ({data}) => {      
         chat.messages.push(JSON.parse(data))
         setChat({messages: chat.messages})
-        setMessage('');
-      }catch(error){
-        console.log(error)
-    }
+        scrollRef.current?.scrollToEnd({animated:true})
     };
-
   }, []);
  
   const sendMessage = () => {
-    
     const jsonString : string = JSON.stringify({ text: message, sentBy: userLogged });
     ws.send(jsonString);
-    console.log(jsonString);
- 
+    setMessage('');
   };
-
 
   return (
     <Fragment>
       <FlatList 
+      ref={scrollRef}
       style={styles.scrollViewContainer}
       data={chat.messages}
       renderItem={({item})=>{
@@ -161,17 +154,21 @@ const chat = () => {
       return(<Text>Nenhuma mensagem no momento</Text>)  
       }}
       />
-      <View style={styles.messageTextInputContainer}>
+      <KeyboardAvoidingView style={styles.messageTextInputContainer}
+      behavior={Platform.OS == 'ios' ? 'padding' : 'height' }
+      keyboardVerticalOffset={Platform.OS == 'ios' ? 100 : 0}
+      >
         <TextInput 
-        style={styles.messageTextInput} 
-        value={message}
-        placeholder='Escreva uma mensagem'
-        onChangeText={(text) => setMessage(text)}/>
-        <TouchableOpacity onPress={()=>{sendMessage()}}
-          style={styles.sendButton}>
-          <Ionicons name="send" size={24} color="white"/>
-        </TouchableOpacity>
-      </View>
+          style={styles.messageTextInput} 
+          value={message}
+          placeholder='Escreva uma mensagem'
+          onChangeText={(text) => setMessage(text)}/>
+          <TouchableOpacity disabled={message.trim() === ''}
+            onPress={()=>{sendMessage()}}
+            style={styles.sendButton}>
+            <Ionicons name="send" size={24} color="white"/>
+          </TouchableOpacity>
+      </KeyboardAvoidingView>
     </Fragment>
   )
 }
